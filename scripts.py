@@ -38,7 +38,6 @@ def get_logger(level=logging.INFO, quite=False, debug=False, to_file=''):
 
 def get_args(default=None, args_string=''):
     """
-    This function gets the command line arguments and passes any unknown arguments to ALE.
     :param default: dictionary of default arguments with keys as `dest`
     :return: command line arguments
     """
