@@ -4,6 +4,7 @@ __author__ = 'Will Brennan'
 
 # built-in modules
 import logging
+import argparse
 # Standard modules
 import cv2
 import numpy
@@ -14,8 +15,9 @@ logger = logging.getLogger('main')
 
 
 def evaluate(img_col, args):
-    assert isinstance(img_col, numpy.ndarray), ''
-    assert img_col.ndim in [2, 3], ''
+    assert isinstance(img_col, numpy.ndarray), 'img_col must be a numpy array'
+    assert img_col.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img_col.ndim)
+    assert isinstance(args, argparse.Namespace), 'args must be of type argparse.Namespace not {0}'.format(type(args))
     img_gry = cv2.cvtColor(img_col, cv2.COLOR_RGB2GRAY)
     rows, cols = img_gry.shape
     crow, ccol = rows/2, cols/2
@@ -32,6 +34,20 @@ def evaluate(img_col, args):
         cv2.waitKey(0)
     result = (640.0*480.0/img_fft.size)*numpy.mean(img_fft)
     return result, result < args.thresh
+
+
+def blur_detector(img_col):
+    assert isinstance(img_col, numpy.ndarray), 'img_col must be a numpy array'
+    assert img_col.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img_col.ndim)
+    args = scripts.gen_args()
+    return evaluate(img_col=img_col, args=args)
+
+
+def get_blur_mask(img_col):
+    assert isinstance(img_col, numpy.ndarray), 'img_col must be a numpy array'
+    assert img_col.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img_col.ndim)
+    args = scripts.gen_args()
+    # todo: Finish this function
 
 
 if __name__ == '__main__':
