@@ -43,13 +43,6 @@ def blur_detector(img_col):
     return evaluate(img_col=img_col, args=args)
 
 
-def get_blur_mask(img_col):
-    assert isinstance(img_col, numpy.ndarray), 'img_col must be a numpy array'
-    assert img_col.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img_col.ndim)
-    args = scripts.gen_args()
-    # todo: Finish this function
-
-
 if __name__ == '__main__':
     args = scripts.get_args()
     logger = scripts.get_logger(quite=args.quite, debug=args.debug)
