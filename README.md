@@ -10,7 +10,7 @@ Getting the app to run is pretty easy. This script will not [install OpenCV](htt
 
 ```bash
 # Clone the repo
-git clone https://github.com/WillBrennan/SkinDetector && cd SkinDetector
+git clone https://github.com/WillBrennan/BlurDetector && cd BlurDetector
 # Install requirements
 python setup.py install
 # Run the Demonstration
