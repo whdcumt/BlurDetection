@@ -7,3 +7,5 @@ __author__ = 'Will Brennan'
 # Custom modules
 
 from main import *
+from FocusMask import *
+import scripts
