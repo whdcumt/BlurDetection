@@ -23,17 +23,15 @@ def get_masks(img, n_seg=250):
     logger.debug('SLIC segmentation complete')
     logger.debug('contour extraction...')
     masks = [[numpy.zeros((img.shape[0], img.shape[1]), dtype=numpy.uint8), None]]
-    bboxs = []
     for region in skimage.measure.regionprops(segments):
         masks.append([masks[0][0].copy(), region.bbox])
         x_min, y_min, x_max, y_max = region.bbox
-        bboxs.append(region.bbox)
         masks[-1][0][x_min:x_max, y_min:y_max] = skimage.img_as_ubyte(region.convex_image)
     logger.debug('contours extracted')
-    return masks[1:], bboxs
+    return masks[1:]
 
 
-def get_blur_mask(img):
+def blur_mask(img):
     assert isinstance(img, numpy.ndarray), 'img_col must be a numpy array'
     assert img.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img.ndim)
     blur_mask = numpy.zeros(img.shape[:2], dtype=numpy.uint8)
@@ -44,3 +42,12 @@ def get_blur_mask(img):
     result = numpy.sum(blur_mask)/(255.0*blur_mask.size)
     logger.info('{0}% of input image is blurry'.format(int(100*result)))
     return blur_mask, result
+
+
+if __name__ == '__main__':
+    img_path = raw_input("Please Enter Image Path: ")
+    img = cv2.imread(img_path)
+    msk, val = blur_mask(img)
+    scripts.display('img', img)
+    scripts.display('msk', msk)
+    cv2.waitKey(0)
