@@ -29,8 +29,8 @@ def evaluate(img_col, args):
     img_fft = numpy.abs(img_fft)
     if args.display and not args.testing:
         cv2.destroyAllWindows()
-        cv2.imshow('img_fft', img_fft)
-        cv2.imshow('img_col', img_col)
+        scripts.display('img_fft', img_fft)
+        scripts.display('img_col', img_col)
         cv2.waitKey(0)
     result = (640.0*480.0/img_fft.size)*numpy.mean(img_fft)
     return result, result < args.thresh
@@ -53,23 +53,34 @@ def get_blur_mask(img_col):
 if __name__ == '__main__':
     args = scripts.get_args()
     logger = scripts.get_logger(quite=args.quite, debug=args.debug)
-    x_points, y_points = [], []
+    x_okay, y_okay = [], []
+    x_blur, y_blur = [], []
     for path in args.image_paths:
         for img_path in scripts.find_images(path):
             logger.debug('evaluating {0}'.format(img_path))
             img = cv2.imread(img_path)
             if isinstance(img, numpy.ndarray):
+                scripts.display('dialog (blurry: Y?)', img)
+                blurry = False
+                if cv2.waitKey(0) in map(lambda i: ord(i), ['Y', 'y']):
+                    blurry = True
                 if args.testing:
                     x_axis = [1, 3, 5, 7, 9]
                     for x in x_axis:
                         img_mod = cv2.GaussianBlur(img, (x, x), 0)
-                        x_points.append(x)
-                        y_points.append(evaluate(img_mod, args=args)[0])
+                        y = evaluate(img_mod, args=args)[0]
+                        if blurry:
+                            x_blur.append(x)
+                            y_blur.append(y)
+                        else:
+                            x_okay.append(x)
+                            y_okay.append(y)
                 else:
                     result, val = evaluate(img, args=args)
                     logger.info('fft average of {0}'.format(result))
     if args.display:
         import matplotlib.pyplot as plt
-        plt.scatter(x_points, y_points)
+        plt.scatter(x_okay, y_okay, color='g')
+        plt.scatter(x_blur, y_blur, color='r')
         plt.grid(True)
         plt.show()
