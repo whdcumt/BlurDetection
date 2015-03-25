@@ -10,6 +10,7 @@ import cv2
 import numpy
 # Custom modules
 import scripts
+import FocusMask
 
 logger = logging.getLogger('main')
 
@@ -68,13 +69,26 @@ if __name__ == '__main__':
                         else:
                             x_okay.append(x)
                             y_okay.append(y)
+                elif args.mask:
+                    msk, res = FocusMask.blur_mask(img)
+                    img_msk = cv2.bitwise_and(img, img, mask=msk)
+                    if args.display:
+                        scripts.display('blur_msk', img_msk)
+                        scripts.display('input', img)
+                        cv2.waitKey(0)
                 else:
                     result, val = evaluate(img, args=args)
                     logger.info('fft average of {0}'.format(result))
                     if args.display:
-                        scripts.display('blur_msk', result)
+                        scripts.display('input', img)
+                        scripts.display('img_fft', result)
+                        cv2.waitKey(0)
     if args.display and args.testing:
         import matplotlib.pyplot as plt
+        logger.debug('x_okay: {0}'.format(x_okay))
+        logger.debug('y_okay: {0}'.format(y_okay))
+        logger.debug('x_blur: {0}'.format(x_blur))
+        logger.debug('y_blur: {0}'.format(y_blur))
         plt.scatter(x_okay, y_okay, color='g')
         plt.scatter(x_blur, y_blur, color='r')
         plt.grid(True)
