@@ -36,7 +36,10 @@ def blur_mask(img):
     assert img.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img.ndim)
     blur_mask = numpy.zeros(img.shape[:2], dtype=numpy.uint8)
     for mask, loc in get_masks(img):
+        logger.debug('Checking Mask: {0}'.format(numpy.unique(mask)))
+        logger.debug('SuperPixel Mask Percentage: {0}%'.format(int((100.0/255.0)*(numpy.sum(mask)/mask.size))))
         val, blurry = main.blur_detector(img[loc[0]:loc[2], loc[1]:loc[3]])
+        logger.debug('Blurry: {0}'.format(blurry))
         if blurry:
             blur_mask = cv2.add(blur_mask, mask)
     result = numpy.sum(blur_mask)/(255.0*blur_mask.size)
