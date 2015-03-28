@@ -4,6 +4,8 @@ is done the mean value in the transformed image is taken, this is then scaled wi
 rippiling effect. This value is then used to threshold the image with larger values being indicative of an in focus image while lower values
 of blurred images. This algorithm is also capable of generating masks of blurred images within the reason by using SLIC segmentation.
 
+Possible improvements to the algorithm could be done by generating a focus mask directly from `img_fft` by conducting errosion and dilation operations before thresholding. This method would be significantly quicker and also closer follow the contours between blurry and in-focus regions.
+
 
 ## Quick Start
 Getting the app to run is pretty easy. This script will not [install OpenCV](http://docs.opencv.org/doc/tutorials/introduction/linux_install/linux_install.html). However to install the rest of the project dependencies and run the demo script use the following commands.
