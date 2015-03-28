@@ -2,9 +2,11 @@
 Blur Detection using Fast Fourier Transforms. A Fast Fourier Transform is applied to the image using the default numpy functions, once this
 is done the mean value in the transformed image is taken, this is then scaled with respect to the size of the image to compensate for the 
 rippiling effect. This value is then used to threshold the image with larger values being indicative of an in focus image while lower values
-of blurred images. This algorithm is also capable of generating masks of blurred images within the reason by using SLIC segmentation.
+of blurred images. This algorithm is also capable of generating masks of blurred images within the reason by using SLIC segmentation or the 
+far faster `img_fft` thresholding and dialation operations. The second method mentioned is now default and can conduct blur detection in 
+real time.
 
-Possible improvements to the algorithm could be done by generating a focus mask directly from `img_fft` by conducting errosion and dilation operations before thresholding. This method would be significantly quicker and also closer follow the contours between blurry and in-focus regions.
+
 
 
 ## Quick Start
