@@ -16,6 +16,7 @@ logger = logging.getLogger('main')
 
 
 def evaluate(img_col, args):
+    numpy.seterr(all='ignore')
     assert isinstance(img_col, numpy.ndarray), 'img_col must be a numpy array'
     assert img_col.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img_col.ndim)
     assert isinstance(args, argparse.Namespace), 'args must be of type argparse.Namespace not {0}'.format(type(args))
@@ -24,17 +25,17 @@ def evaluate(img_col, args):
     crow, ccol = rows/2, cols/2
     f = numpy.fft.fft2(img_gry)
     fshift = numpy.fft.fftshift(f)
-    fshift[crow-30:crow+30, ccol-30:ccol+30] = 0
+    fshift[crow-75:crow+75, ccol-75:ccol+75] = 0
     f_ishift = numpy.fft.ifftshift(fshift)
     img_fft = numpy.fft.ifft2(f_ishift)
-    img_fft = numpy.abs(img_fft)
+    img_fft = 20*numpy.log(numpy.abs(img_fft))
     if args.display and not args.testing:
         cv2.destroyAllWindows()
         scripts.display('img_fft', img_fft)
         scripts.display('img_col', img_col)
         cv2.waitKey(0)
-    result = (640.0*480.0/img_fft.size)*numpy.mean(img_fft)
-    return result, result < args.thresh
+    result = numpy.mean(img_fft)
+    return img_fft, result, result < args.thresh
 
 
 def blur_detector(img_col):
@@ -77,11 +78,11 @@ if __name__ == '__main__':
                         scripts.display('input', img)
                         cv2.waitKey(0)
                 else:
-                    result, val = evaluate(img, args=args)
+                    img_fft, result, val = evaluate(img, args=args)
                     logger.info('fft average of {0}'.format(result))
                     if args.display:
                         scripts.display('input', img)
-                        scripts.display('img_fft', result)
+                        scripts.display('img_fft', img_fft)
                         cv2.waitKey(0)
     if args.display and args.testing:
         import matplotlib.pyplot as plt
