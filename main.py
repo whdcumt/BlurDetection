@@ -38,11 +38,15 @@ def evaluate(img_col, args):
     return img_fft, result, result < args.thresh
 
 
-def blur_detector(img_col):
+def blur_detector(img_col, thresh=10, mask=False):
     assert isinstance(img_col, numpy.ndarray), 'img_col must be a numpy array'
     assert img_col.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img_col.ndim)
     args = scripts.gen_args()
-    return evaluate(img_col=img_col, args=args)
+    args.thresh = thresh
+    if mask:
+        return FocusMask.blur_mask(img)
+    else:
+        return evaluate(img_col=img_col, args=args)
 
 
 if __name__ == '__main__':
