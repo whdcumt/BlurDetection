@@ -40,6 +40,7 @@ cv2.waitKey(0)
 ```
 
 ## References
+[Image Partial Blur Detection and Classification](http://www.cse.cuhk.edu.hk/leojia/all_final_papers/blur_detect_cvpr08.pdf)
 
 ## Demonstration
 ![Blur Mask Demo](https://raw.githubusercontent.com/WillBrennan/BlurDetection/master/demo.png)
