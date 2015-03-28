@@ -74,8 +74,9 @@ if __name__ == '__main__':
                     msk, res = FocusMask.blur_mask(img)
                     img_msk = cv2.bitwise_and(img, img, mask=msk)
                     if args.display:
-                        scripts.display('blur_msk', img_msk)
-                        scripts.display('input', img)
+                        scripts.display('res', img_msk)
+                        scripts.display('msk', msk)
+                        scripts.display('img', img)
                         cv2.waitKey(0)
                 else:
                     img_fft, result, val = evaluate(img, args=args)
