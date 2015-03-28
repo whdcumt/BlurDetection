@@ -47,11 +47,13 @@ def blur_mask_old(img):
     return blur_mask, result
 
 
-def closing(msk):
+def morphology(msk):
     assert isinstance(msk, numpy.ndarray), 'msk must be a numpy array'
     assert msk.ndim == 2, 'msk must be a greyscale image'
-    kernel = cv2.getGaussianKernel(5, sigma=-1)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
     msk = cv2.erode(msk, kernel, iterations=1)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+    msk = cv2.morphologyEx(msk, cv2.MORPH_CLOSE, kernel)
     msk[msk < 128] = 0
     msk[msk > 127] = 255
     return msk
@@ -80,7 +82,7 @@ def blur_mask(img):
     logger.debug('removing border')
     msk = remove_border(msk)
     logger.debug('applying erosion and dilation operators')
-    msk = closing(msk)
+    msk = morphology(msk)
     logger.debug('evaluation complete')
     result = numpy.sum(msk)/(255.0*msk.size)
     logger.info('{0}% of input image is blurry'.format(int(100*result)))
