@@ -17,8 +17,8 @@ python setup.py install
 python main.py <image_directory> --display --testing
 ```
 ## Usage
-Usage of this as  a submodule is simple, just clone into your projects directory (or preferably add as a git submodule), and your ready to go. Below
-is an example code usage.
+Usage of this as  a submodule is simple, just clone into your projects directory (or preferably add as a git submodule), and your ready to go. Below is an example code usage. Under some circumstances manual tuning of the
+threshold value may be required to achieve good results.
 
 ```python
 import os
@@ -39,3 +39,5 @@ cv2.waitKey(0)
 
 ## References
 
+## Demonstration
+![Blur Mask Demo](https://raw.githubusercontent.com/WillBrennan/BlurDetection/master/demo.png)
