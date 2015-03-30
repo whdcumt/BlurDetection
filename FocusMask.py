@@ -70,13 +70,13 @@ def remove_border(msk, width=50):
     msk[:, w-dw:] = 255
     return msk
 
+
 def blur_mask(img):
     assert isinstance(img, numpy.ndarray), 'img_col must be a numpy array'
     assert img.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img.ndim)
     msk, val, blurry = main.blur_detector(img)
     logger.debug('inverting img_fft')
     msk = cv2.convertScaleAbs(255-(255*msk/numpy.max(msk)))
-    print numpy.max(msk), numpy.min(msk)
     msk[msk < 50] = 0
     msk[msk > 127] = 255
     logger.debug('removing border')
