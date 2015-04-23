@@ -14,7 +14,7 @@ Getting the app to run is pretty easy. This script will not [install OpenCV](htt
 
 ```bash
 # Clone the repo
-git clone https://github.com/WillBrennan/BlurDetector && cd BlurDetector
+git clone https://github.com/WillBrennan/BlurDetection && cd BlurDetection
 # Install requirements
 sudo pip install numpy
 # Run the Demonstration
@@ -28,16 +28,16 @@ threshold value may be required to achieve good results.
 import os
 import cv2
 import numpy
-import BlurDetector
+import BlurDetection
 
 img_path = raw_input("Please Enter Image Path: ")
 assert os.path.exists(img_path), "img_path does not exists"
 img = cv2.imread(img_path)
-val, blurry = BlurDetector.blur_detector(img)
+val, blurry = BlurDetection.blur_detector(img)
 print "this image {0} blurry".format(["isn't", "is"][blurry])
 msk, val = BlurDetector.blur_mask(img)
-BlurDetector.scripts.display('img', img)
-BlurDetector.scripts.display('msk', msk)
+BlurDetection.scripts.display('img', img)
+BlurDetection.scripts.display('msk', msk)
 cv2.waitKey(0)
 ```
 
