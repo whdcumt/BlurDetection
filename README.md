@@ -16,7 +16,7 @@ Getting the app to run is pretty easy. This script will not [install OpenCV](htt
 # Clone the repo
 git clone https://github.com/WillBrennan/BlurDetection && cd BlurDetection
 # Install requirements
-sudo pip install numpy
+sudo pip install numpy scikit-image
 # Run the Demonstration
 python main.py <image_directory> --display --testing
 ```
