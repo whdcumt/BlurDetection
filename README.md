@@ -33,7 +33,7 @@ import BlurDetection
 img_path = raw_input("Please Enter Image Path: ")
 assert os.path.exists(img_path), "img_path does not exists"
 img = cv2.imread(img_path)
-val, blurry = BlurDetection.blur_detector(img)
+img_fft, val, blurry = BlurDetection.blur_detector(img)
 print "this image {0} blurry".format(["isn't", "is"][blurry])
 msk, val = BlurDetector.blur_mask(img)
 BlurDetection.scripts.display('img', img)
