@@ -75,7 +75,7 @@ if __name__ == '__main__':
                             x_okay.append(x)
                             y_okay.append(y)
                 elif args.mask:
-                    msk, res = FocusMask.blur_mask(img)
+                    msk, res, blurry = FocusMask.blur_mask(img)
                     img_msk = cv2.bitwise_and(img, img, mask=msk)
                     if args.display:
                         scripts.display('res', img_msk)

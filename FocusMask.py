@@ -86,7 +86,7 @@ def blur_mask(img):
     logger.debug('evaluation complete')
     result = numpy.sum(msk)/(255.0*msk.size)
     logger.info('{0}% of input image is blurry'.format(int(100*result)))
-    return msk, result
+    return msk, result, blurry
 
 
 if __name__ == '__main__':
