@@ -18,7 +18,7 @@ git clone https://github.com/WillBrennan/BlurDetection && cd BlurDetection
 # Install requirements
 sudo pip install numpy scikit-image
 # Run the Demonstration
-python main.py <image_directory> --display --testing
+python main.py <image_directory> --display --mask
 ```
 ## Usage
 Usage of this as  a submodule is simple, just clone into your projects directory (or preferably add as a git submodule), and your ready to go. Below is an example code usage. Under some circumstances manual tuning of the
